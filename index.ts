@@ -10,13 +10,14 @@ dovenv.config();
 const app: Express = express();
 const port = process.env.PORT;
 
-// cors
+// middlewares
 app.use(
   cors({
     origin: (origin, cb) => cb(null, true),
     credentials: true,
   })
 );
+app.use(express.json());
 
 //it tracks every request that comes in
 app.use((req: Request, res: Response, next: NextFunction) => {
@@ -28,8 +29,8 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Hey");
 });
 
-app.use("/api/games/", gameRoutes);
-app.use("/api/developers/", developerRoutes);
+app.use("/api/games/", gameRoutes); // games
+app.use("/api/developers/", developerRoutes); // developers
 
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
