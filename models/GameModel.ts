@@ -5,11 +5,12 @@ class GameDTO {
 
   static createGame(game: Game): Game {
     GameDTO.games.push(game);
+
     return game;
   }
 
   static deleteGame(id: string): Game | null {
-    const g = GameDTO.games.find((d) => d.id === id); // check if dev exists
+    const g = GameDTO.games.find((d) => d.id === id); // check if game exists
 
     if (!g) {
       return null;
@@ -22,6 +23,7 @@ class GameDTO {
 
   static getGame(id: string): Game | undefined {
     const g = GameDTO.games.find((d) => d.id === id);
+
     return g;
   }
 

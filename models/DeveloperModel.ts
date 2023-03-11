@@ -24,6 +24,7 @@ class DeveloperDTO {
 
   static getDeveloper(id: string): Developer | undefined {
     const d = DeveloperDTO.developers.find((d) => d.id === id);
+
     return d;
   }
 

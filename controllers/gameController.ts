@@ -24,7 +24,6 @@ export const createGame = async (
 
     res.status(200).json(game);
   } catch (e) {
-    console.log(e);
     res.status(400).json({ error: e });
   }
 };
@@ -34,15 +33,19 @@ export const deleteGame = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const game = GameDTO.deleteGame(id);
+    const game = GameDTO.deleteGame(id);
 
-  if (!game) {
-    return res.status(400).json({ error: "No such game" });
+    if (!game) {
+      return res.status(400).json({ error: "No such game" });
+    }
+
+    res.status(200).json(game);
+  } catch (e) {
+    res.status(400).json({ error: e });
   }
-
-  res.status(200).json(game);
 };
 
 export const getGame = async (
@@ -50,15 +53,19 @@ export const getGame = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { id } = req.params;
+  try {
+    const { id } = req.params;
 
-  const game = GameDTO.getGame(id);
+    const game = GameDTO.getGame(id);
 
-  if (!game) {
-    return res.status(404).json({ error: "No such game" });
+    if (!game) {
+      return res.status(404).json({ error: "No such game" });
+    }
+
+    res.status(200).json(game);
+  } catch (e) {
+    res.status(400).json({ error: e });
   }
-
-  res.status(200).json(game);
 };
 
 export const getGames = async (
@@ -76,23 +83,27 @@ export const updateGame = async (
   res: Response,
   next: NextFunction
 ) => {
-  const { title, genre, rating, developer, release_date } = req.body;
-  const { id } = req.params;
+  try {
+    const { title, genre, rating, developer, release_date } = req.body;
+    const { id } = req.params;
 
-  const game: Game = {
-    title,
-    genre,
-    rating,
-    developer,
-    release_date,
-    id,
-  };
+    const game: Game = {
+      title,
+      genre,
+      rating,
+      developer,
+      release_date,
+      id,
+    };
 
-  const ok = GameDTO.updateGame(game);
+    const ok = GameDTO.updateGame(game);
 
-  if (!ok) {
-    return res.status(404).json({ error: "No such game" });
+    if (!ok) {
+      return res.status(404).json({ error: "No such game" });
+    }
+
+    res.status(200).json(game);
+  } catch (e) {
+    res.status(400).json({ error: e });
   }
-
-  res.status(200).json(game);
 };
